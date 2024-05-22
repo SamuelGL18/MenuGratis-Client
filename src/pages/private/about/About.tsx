@@ -2,19 +2,6 @@ import { motion } from "framer-motion";
 import { Col, Container, Row, Image } from "react-bootstrap";
 
 const About = () => {
-  // const key = "AIzaSyDMCisaVYrNF5I4MzOAiLVeKw-NS1EJFUw";
-  // const [position, setPosition] = useState({ lat: 37.7749, lng: -122.4194 }); // Default coordinates
-
-  // const getLocation = () => {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (pos) =>
-  //       setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-  //     (error) => console.error(error)
-  //   );
-  // };
-  // const mapContainerStyle = { width: "100%", height: "400px" };
-  // const zoom = 10;
-
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state

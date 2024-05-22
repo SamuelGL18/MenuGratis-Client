@@ -13,27 +13,28 @@ import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [usuario, setUsuario] = useState("");
+  const irA = useNavigate();
 
+  // Datos
+  const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
 
+  //* Autorizar al usuario
   const enviar = async () => {
-    // * fetch data
     try {
-      const response = await axios.post(
-        "/auth",
-        JSON.stringify({ username: usuario, password }),
+      const respuesta = await axios.post(
+        "/autorizacion",
+        { nombreUsuario: usuario, password },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      if (response.status === 200) {
-        navigate(`/perfil`);
+      if (respuesta.status === 200) {
+        irA(`/perfil`);
       }
     } catch (error) {
-      console.error("Error checking username:", error); // Set user-friendly error message
+      console.error("Ha ocurrido un error:", error);
     }
   };
   return (

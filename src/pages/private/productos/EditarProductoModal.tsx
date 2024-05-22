@@ -6,26 +6,31 @@ import {
   FormControl,
   Button,
   Form,
+  Spinner,
 } from "react-bootstrap";
-import { ControllersContext } from "../Context";
+import { ControladoresContexto } from "../Contexto";
 import axios from "../../../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQueryClient, useMutation } from "react-query";
 
 const EditarProductoModal = () => {
   // Importes del contexto
-  const { mostrarEditor, handleOcultarEditor } = useContext(ControllersContext);
+  const { mostrarEditor, handleOcultarEditor } = useContext(
+    ControladoresContexto
+  );
   const { idproducto } = useParams();
+  const queryClient = useQueryClient();
 
-  const navigate = useNavigate();
+  const irA = useNavigate();
 
   // datos del producto
   const [nuevoProducto, setNuevoProducto] = useState("");
   const [nuevaDescripcion, setNuevaDescripcion] = useState("");
   const [nuevoPrecio, setNuevoPrecio] = useState("");
+  const [nuevaCategoria, setNuevaCategoria] = useState("");
   // const [imagen, setImagen] = useState(null);
 
-  // Obteniendo datos antiguos
-
+  //* Obteniendo datos antiguos
   const getProducto = async () => {
     try {
       const response = await axios.get(`/producto/${idproducto}`, {
@@ -33,9 +38,10 @@ const EditarProductoModal = () => {
         withCredentials: true,
       });
       if (response.data) {
-        setNuevoProducto(response.data.name);
-        setNuevaDescripcion(response.data.description);
-        setNuevoPrecio(response.data.price);
+        setNuevoProducto(response.data.nombre);
+        setNuevaDescripcion(response.data.descripcion);
+        setNuevoPrecio(response.data.precio);
+        setNuevaCategoria(response.data.categoria);
       }
     } catch (error) {
       console.error(
@@ -49,7 +55,7 @@ const EditarProductoModal = () => {
     getProducto();
   }, []);
 
-  const actualizarProducto = async () => {
+  const actualizarProductoAPI = async (nuevoProducto) => {
     try {
       // const formData = new FormData(); // Use FormData for multipart uploads
       // formData.append("name", nuevoProducto);
@@ -62,39 +68,54 @@ const EditarProductoModal = () => {
       //   console.warn("No image selected for upload."); // Inform user
       // }
 
-      const response = await axios.patch(
+      const respuesta = await axios.patch(
         `/producto/${idproducto}`,
-        JSON.stringify({
-          name: nuevoProducto,
-          description: nuevaDescripcion,
-          price: nuevoPrecio,
-        }),
+        nuevoProducto,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
 
-      if (response.data) {
-        console.log(response.data);
-        // Handle successful creation (e.g., close modal, show success message)
+      if (respuesta.data) {
+        console.log(respuesta.data);
+        return respuesta;
       }
     } catch (error) {
       console.error(error);
-      // Handle errors (e.g., display error message to user)
     }
-    setNuevoProducto("");
-    setNuevaDescripcion("");
-    setNuevoPrecio("");
-    navigate("/perfil");
-    // setImagen(null);
+  };
+
+  const actualizarProductoMutation = useMutation(actualizarProductoAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("datosUsuario");
+      setNuevoProducto("");
+      setNuevaDescripcion("");
+      setNuevoPrecio("");
+      irA("/perfil");
+      // setImagen(null);
+      handleOcultarEditor();
+    },
+  });
+
+  const actualizarProducto = () => {
+    actualizarProductoMutation.mutate({
+      nombre: nuevoProducto,
+      descripcion: nuevaDescripcion,
+      precio: nuevoPrecio,
+      categoria: nuevaCategoria,
+    });
+  };
+
+  const regresar = () => {
     handleOcultarEditor();
+    irA("/perfil");
   };
 
   return (
     <>
       <Modal show={mostrarEditor} onHide={handleOcultarEditor} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton onClick={regresar}>
           <Modal.Title>
             <h1>Editar Producto</h1>
           </Modal.Title>
@@ -143,6 +164,20 @@ const EditarProductoModal = () => {
                 }}
               />
             </FormGroup>
+            <FormGroup>
+              <FormLabel>Categoria</FormLabel>
+              <FormControl
+                required
+                type="text"
+                className="mb-2"
+                id="categoria"
+                autoComplete="off"
+                value={nuevaCategoria}
+                onChange={(e) => {
+                  setNuevaCategoria(e.target.value);
+                }}
+              />
+            </FormGroup>
             {/* <FormGroup>
               <FormLabel>Imágen</FormLabel>
               <FormControl
@@ -159,7 +194,11 @@ const EditarProductoModal = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={actualizarProducto}>
-            Actualizar
+            {!actualizarProductoMutation.isLoading ? (
+              "Actualizar"
+            ) : (
+              <Spinner animation="border" role="status"></Spinner>
+            )}
           </Button>
         </Modal.Footer>
       </Modal>

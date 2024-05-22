@@ -2,36 +2,42 @@ import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
-import PrivateView from "./pages/dash/PrivateView";
-import HomePage from "./pages/HomePage";
-import Products from "./pages/dash/products/Products";
-import About from "./pages/dash/about/About";
-import PublicView from "./pages/view/PublicView";
-import PublicProducts from "./pages/view/products/Products";
+import VistaPrivada from "./pages/private/VistaPrivada";
+import PaginaInicio from "./pages/PaginaInicio";
+import Productos from "./pages/private/productos/Productos";
+import About from "./pages/private/about/About";
+import VistaPublica from "./pages/public/VistaPublica";
+import ProductosPublicos from "./pages/public/productos/Productos";
 import NotFound from "./pages/NotFound";
-import Producto from "./pages/view/products/Producto";
-import Carrito from "./pages/dash/products/Carrito";
-import AddModal from "./pages/dash/products/AgregarProductoModal";
-import EditarProductoModal from "./pages/dash/products/EditarProductoModal";
-import EliminarProductoModal from "./pages/dash/products/EliminarProductoModal";
+import Producto from "./pages/public/productos/Producto";
+import Carrito from "./pages/private/productos/Carrito";
+import AgregarProductoModal from "./pages/private/productos/AgregarProductoModal";
+import EditarProductoModal from "./pages/private/productos/EditarProductoModal";
+import EliminarProductoModal from "./pages/private/productos/EliminarProductoModal";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route index element={<HomePage />} />
+        <Route index element={<PaginaInicio />} />
         <Route path="registro" element={<Registro />} />
         <Route path="login" element={<Login />} />
 
-        <Route path="ver/:id" element={<PublicView />}>
-          <Route index element={<PublicProducts />} />
+        <Route path="ver/:usuario" element={<VistaPublica />}>
+          <Route index element={<ProductosPublicos />} />
           <Route path="nosotros" element={<About />} />
-          <Route path="producto/:idproducto" element={<Producto />} />
         </Route>
+        <Route
+          path="ver/:usuario/producto/:idproducto"
+          element={<Producto />}
+        />
 
-        <Route path="perfil" element={<PrivateView />}>
-          <Route index element={<Products />} />
-          <Route path="producto/:idproducto" element={<AddModal />} />
+        <Route path="perfil" element={<VistaPrivada />}>
+          <Route index element={<Productos />} />
+          <Route
+            path="producto/:idproducto"
+            element={<AgregarProductoModal />}
+          />
           <Route
             path="producto/editar/:idproducto"
             element={<EditarProductoModal />}

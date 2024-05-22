@@ -1,17 +1,12 @@
 import { Navbar, Container, Nav, NavLink } from "react-bootstrap";
 
-const SiteNavbar = () => {
+const MenuGratisNavbar = () => {
   return (
     <>
       <Navbar expand="lg" className="shadow-sm mb-3">
         <Container>
           <Navbar.Brand href="">
-            <img
-              src="../../public/shop.png"
-              alt="Your Logo"
-              width="30"
-              height="30"
-            />
+            <img src="/shop.png" alt="Logo" width="30" height="30" />
             Localito
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,4 +22,4 @@ const SiteNavbar = () => {
   );
 };
 
-export default SiteNavbar;
+export default MenuGratisNavbar;

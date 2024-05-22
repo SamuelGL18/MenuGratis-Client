@@ -1,6 +1,6 @@
 import { Button, Image } from "react-bootstrap";
 import { NavLink, useParams } from "react-router-dom";
-const UserFooter = () => {
+const PiePagina = () => {
   const { id } = useParams();
   const url = `http://localhost:3500/ver/${id}`;
   const handleClick = () => {
@@ -43,4 +43,4 @@ const UserFooter = () => {
   );
 };
 
-export default UserFooter;
+export default PiePagina;

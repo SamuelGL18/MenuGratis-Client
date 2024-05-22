@@ -1,24 +1,31 @@
-import { useEffect, useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Col, Card, CardImg } from "react-bootstrap";
-import { ControllersContext } from "../Context";
-import { NavLink, useParams } from "react-router-dom";
+import { ControladoresContexto } from "../Contexto";
+import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 const Cards = () => {
-  const { data, getData } = useContext(ControllersContext);
+  const { productos, categoria, seleccionarProductos } = useContext(
+    ControladoresContexto
+  );
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const imageURL = "http://localhost:3500/uploads/";
+  const imagenURL = "http://localhost:3500/uploads/";
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, scale: 1 },
     hover: { scale: 1.1 },
   };
+
+  useEffect(() => {
+    seleccionarProductos();
+  }, [categoria]);
+
+  useEffect(() => {
+    seleccionarProductos();
+  }, []);
+
   return (
     <>
-      {data?.saleItems?.map((item) => (
+      {productos?.map((item) => (
         <Col xs={12} md={4} lg={3} xl={3} className="mb-4">
           <motion.div
             variants={containerVariants}
@@ -30,7 +37,7 @@ const Cards = () => {
               <NavLink to={`producto/${item._id}`}>
                 <CardImg
                   variant="top"
-                  src={`${imageURL}${item.image}`}
+                  src={`${imagenURL}${item.imagen}`}
                   style={{
                     maxHeight: "18em",
                     height: "18em",
@@ -39,8 +46,8 @@ const Cards = () => {
                 ></CardImg>
               </NavLink>
               <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
-                <Card.Text>{`Q. ${item.price}`}</Card.Text>
+                <Card.Title>{item.nombre}</Card.Title>
+                <Card.Text>{`Q. ${item.precio}`}</Card.Text>
               </Card.Body>
             </Card>
           </motion.div>

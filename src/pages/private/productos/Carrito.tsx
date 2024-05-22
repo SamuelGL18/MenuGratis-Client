@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { ControllersContext } from "../Context";
+import { ControladoresContexto } from "../Contexto";
 import { Row, Button } from "react-bootstrap";
 
 const Carrito = () => {
-  const { data, getData, cart } = useContext(ControllersContext);
+  const { data, getData, cart } = useContext(ControladoresContexto);
   useEffect(() => {
     getData();
   }, []);

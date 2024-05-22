@@ -6,53 +6,64 @@ import {
   FormControl,
   Button,
   Form,
+  Spinner,
 } from "react-bootstrap";
-import { ControllersContext } from "../Context";
+import { ControladoresContexto } from "../Contexto";
 import axios from "../../../api/axios";
-const AgregarProductoModal = () => {
-  // Importes del contexto
-  const { mostrarAgregar, getData, handleOcultarAgregar } =
-    useContext(ControllersContext);
+import { useMutation, useQueryClient } from "react-query";
 
-  // datos del producto
+const AgregarProductoModal = () => {
+  const queryClient = useQueryClient();
+  // Importes del contexto
+  const { mostrarAgregar, handleOcultarAgregar } = useContext(
+    ControladoresContexto
+  );
+
+  // Datos del producto
   const [producto, setProducto] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState("");
   const [imagen, setImagen] = useState(null);
+  const [categoria, setCategoria] = useState("");
 
-  const addProduct = async () => {
+  //* Posteo del producto
+  const agregarProductoAPI = async (formData) => {
     try {
-      const formData = new FormData(); // Use FormData for multipart uploads
-      formData.append("name", producto);
-      formData.append("description", descripcion);
-      formData.append("price", precio);
-      // Handle image upload if file is selected
-      if (imagen) {
-        formData.append("image", imagen);
-      } else {
-        console.warn("No image selected for upload."); // Inform user
-      }
-
-      const response = await axios.post("/producto", formData, {
+      const respuesta = await axios.post("/producto", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
-
-      if (response.data) {
-        console.log(response.data);
-        getData();
-        // Handle successful creation (e.g., close modal, show success message)
-      }
+      return respuesta;
     } catch (error) {
       console.error(error);
-      // Handle errors (e.g., display error message to user)
     }
-    setProducto("");
-    setDescripcion("");
-    setPrecio("");
-    setImagen(null);
-    handleOcultarAgregar();
-    getData();
+  };
+
+  const agregarProductoMutation = useMutation(agregarProductoAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("datosUsuario");
+      setProducto("");
+      setDescripcion("");
+      setPrecio("");
+      setImagen(null);
+      handleOcultarAgregar();
+    },
+  });
+
+  const crearProducto = async () => {
+    const formData = new FormData(); // Use FormData for multipart uploads
+    formData.append("nombre", producto);
+    formData.append("descripcion", descripcion);
+    formData.append("precio", precio);
+    formData.append("categoria", categoria);
+    // Handle image upload if file is selected
+    if (imagen) {
+      await formData.append("imagen", imagen);
+    } else {
+      console.warn("No se ha seleccionado la foto del producto."); // Inform user
+    }
+    console.log(formData);
+    agregarProductoMutation.mutate(formData);
   };
 
   return (
@@ -115,16 +126,34 @@ const AgregarProductoModal = () => {
                 type="file"
                 className="mb-2"
                 id="imagen"
-                name="image"
+                name="imagen"
                 autoComplete="off"
                 onChange={(e) => setImagen(e.target.files[0])}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormLabel>Categoria</FormLabel>
+              <FormControl
+                required
+                type="text"
+                className="mb-2"
+                id="categoria"
+                autoComplete="off"
+                value={categoria}
+                onChange={(e) => {
+                  setCategoria(e.target.value);
+                }}
               />
             </FormGroup>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={addProduct}>
-            Agregar
+          <Button variant="primary" onClick={crearProducto}>
+            {!agregarProductoMutation.isLoading ? (
+              "Agregar"
+            ) : (
+              <Spinner animation="border" role="status"></Spinner>
+            )}
           </Button>
         </Modal.Footer>
       </Modal>

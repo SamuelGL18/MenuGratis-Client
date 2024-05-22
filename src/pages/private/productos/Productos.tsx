@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import EditarProductoModal from "./EditarProductoModal";
 import EliminarProductoModal from "./EliminarProductoModal";
 
-const Products = () => {
+const Productos = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state
@@ -27,4 +27,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Productos;

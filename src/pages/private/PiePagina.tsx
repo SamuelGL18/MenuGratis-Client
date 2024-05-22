@@ -1,19 +1,17 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { Button, Image } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { ControllersContext } from "./Context";
+import { ControladoresContexto } from "./Contexto";
 
-const UserFooter = () => {
-  const { data } = useContext(ControllersContext);
-  const url = `http://localhost:5173/ver/${data?._id}`;
-  const handleClick = () => {
+const PiePagina = () => {
+  const { datosUsuario } = useContext(ControladoresContexto);
+  const url = `http://localhost:5173/ver/${datosUsuario?.nombreUsuario}`;
+  const obtenerLink = () => {
     navigator.clipboard
       .writeText(url)
-      .then(() => {
-        // Reset copied state after 1.5 seconds
-      })
+      .then(() => {})
       .catch((err) => {
-        console.error("Could not copy text: ", err);
+        console.error("No se pudo copiar el texto: ", err);
       });
   };
 
@@ -35,7 +33,7 @@ const UserFooter = () => {
         <NavLink to={""}>
           <Button
             variant="transparent"
-            onClick={handleClick}
+            onClick={obtenerLink}
             className="nav-link p-text-style"
           >
             <Image src="../../../public/link.png" height={30} width={30} />
@@ -46,4 +44,4 @@ const UserFooter = () => {
   );
 };
 
-export default UserFooter;
+export default PiePagina;

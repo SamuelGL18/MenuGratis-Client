@@ -2,7 +2,7 @@ import { Container, Row } from "react-bootstrap";
 import Cards from "./Cards";
 import { motion } from "framer-motion";
 
-const PublicProducts = () => {
+const ProductosPublicos = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state
@@ -19,4 +19,4 @@ const PublicProducts = () => {
   );
 };
 
-export default PublicProducts;
+export default ProductosPublicos;

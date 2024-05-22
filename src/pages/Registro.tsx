@@ -14,7 +14,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 
 const Registro = () => {
-  const navigate = useNavigate();
+  const irA = useNavigate();
+
+  // Datos
   const [usuario, setUsuario] = useState("");
   const [usuarioValido, setUsuarioValido] = useState(false);
   const [errorUsuario, setErrorUsuario] = useState("");
@@ -23,6 +25,7 @@ const Registro = () => {
   const [passwordValida, setPasswordValida] = useState(false);
   const [errorPassword, setErrorPassword] = useState("");
 
+  // * Verificar que no este duplicado cada vez que se escribe en el campo usuario
   useEffect(() => {
     const setError = async () => {
       const USUARIO_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -36,16 +39,18 @@ const Registro = () => {
         error = "*Solo se permiten mayusculas, minusculas, numeros, -, _ ";
       }
 
-      // * fetch data
+      // * fetch API que verifica si el nombre de usuario no esta duplicado
       try {
-        const response = await axios.post(
-          "/verifyDuplication",
-          JSON.stringify({ username: usuario }),
+        const respuesta = await axios.post(
+          "/verificarNombre",
+          { nombreUsuario: usuario },
           {
             headers: { "Content-Type": "application/json" },
+            validateStatus: () => true,
           }
         );
-        if (response.data === 409) {
+        // Error de conflicto
+        if (respuesta.status === 409) {
           error = "*Este usuario ya existe";
         }
       } catch (error) {
@@ -57,6 +62,7 @@ const Registro = () => {
     setError();
   }, [usuario]);
 
+  //* Comprobando si la password cumple con la regex cada vez que se escribe en el campo password
   useEffect(() => {
     const setError = () => {
       const CONTRA_REGEX =
@@ -78,36 +84,35 @@ const Registro = () => {
   }, [password]);
 
   const enviar = async () => {
-    // * fetch data
-
+    //* Creando el nuevo usuario
     try {
-      const response = await axios.post(
-        "/register",
+      const respuesta = await axios.post(
+        "/registro",
         {
-          username: usuario,
+          nombreUsuario: usuario,
           password,
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      if (response.status === 201) {
+      if (respuesta.status === 201) {
         try {
-          const response = await axios.post(
-            "/auth",
-            JSON.stringify({ username: usuario, password }),
+          const respuesta = await axios.post(
+            "/autorizacion",
+            { nombreUsuario: usuario, password },
             {
               headers: { "Content-Type": "application/json" },
               withCredentials: true,
             }
           );
-          if (response.data) navigate(`/perfil`);
+          if (respuesta.status == 200) irA(`/perfil`);
         } catch (error) {
-          console.error("Error checking username:", error); // Set user-friendly error message
+          console.error("Se produjo un error:", error);
         }
       }
     } catch (error) {
-      console.error("Error sending registration request:", error);
+      console.error("Se produjo un error:", error);
     }
   };
 
