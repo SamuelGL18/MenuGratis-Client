@@ -5,15 +5,16 @@ import Registro from "./pages/Registro";
 import VistaPrivada from "./pages/private/VistaPrivada";
 import PaginaInicio from "./pages/PaginaInicio";
 import Productos from "./pages/private/productos/Productos";
-import About from "./pages/private/about/About";
 import VistaPublica from "./pages/public/VistaPublica";
 import ProductosPublicos from "./pages/public/productos/Productos";
 import NotFound from "./pages/NotFound";
 import Producto from "./pages/public/productos/Producto";
-import Carrito from "./pages/private/productos/Carrito";
+import Carrito from "./pages/private/Carrito";
 import AgregarProductoModal from "./pages/private/productos/AgregarProductoModal";
 import EditarProductoModal from "./pages/private/productos/EditarProductoModal";
 import EliminarProductoModal from "./pages/private/productos/EliminarProductoModal";
+import PedidosHechos from "./pages/private/PedidosHechos";
+import PedidosRecividos from "./pages/private/PedidosRecividos";
 
 function App() {
   return (
@@ -25,7 +26,6 @@ function App() {
 
         <Route path="ver/:usuario" element={<VistaPublica />}>
           <Route index element={<ProductosPublicos />} />
-          <Route path="nosotros" element={<About />} />
         </Route>
         <Route
           path="ver/:usuario/producto/:idproducto"
@@ -46,9 +46,10 @@ function App() {
             path="producto/eliminar/:idproducto"
             element={<EliminarProductoModal />}
           />
-          <Route path="nosotros" element={<About />} />
-          <Route path="carrito" element={<Carrito />} />
         </Route>
+        <Route path="perfil/carrito" element={<Carrito />} />
+        <Route path="perfil/pedidosHechos" element={<PedidosHechos />} />
+        <Route path="perfil/pedidosRecividos" element={<PedidosRecividos />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>

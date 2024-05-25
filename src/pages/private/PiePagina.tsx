@@ -22,13 +22,13 @@ const PiePagina = () => {
           className="me-3"
           to={"https://www.instagram.com/j_samuel190/?hl=es-la"}
         >
-          <Image src="../../../public/instagram.png" height={30} width={30} />
+          <Image src="/instagram.png" height={30} width={30} />
         </NavLink>
         <NavLink
           className="me-3"
           to={"https://www.facebook.com/profile.php?id=100026046003163"}
         >
-          <Image src="../../../public/facebook.png" height={30} width={30} />
+          <Image src="/facebook.png" height={30} width={30} />
         </NavLink>
         <NavLink to={""}>
           <Button
@@ -36,7 +36,7 @@ const PiePagina = () => {
             onClick={obtenerLink}
             className="nav-link p-text-style"
           >
-            <Image src="../../../public/link.png" height={30} width={30} />
+            <Image src="/link.png" height={30} width={30} />
           </Button>
         </NavLink>
       </div>

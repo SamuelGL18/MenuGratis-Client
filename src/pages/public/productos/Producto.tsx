@@ -5,12 +5,15 @@ import axios from "../../../api/axios";
 import { useQuery } from "react-query";
 import PiePagina from "../PiePagina";
 import Navbar from "../../../components/Navbar";
+import { useMutation, useQueryClient } from "react-query";
 
 const Producto = () => {
+  const queryClient = useQueryClient();
   const { usuario, idproducto } = useParams();
   const imagenURL = "http://localhost:3500/uploads/";
   const [cantidad, setCantidad] = useState(1);
 
+  //* Fetch el producto
   const getProducto = async () => {
     try {
       const respuesta = await axios.get(
@@ -29,10 +32,10 @@ const Producto = () => {
       );
     }
   };
-
   const { isLoading, data: producto } = useQuery("producto", getProducto);
 
-  const agregarAlCarrito = () => {
+  //* Carrito
+  const agregarCantidad = () => {
     setCantidad(cantidad + 1);
   };
 
@@ -42,79 +45,89 @@ const Producto = () => {
     }
   };
 
-  const enviarAlCarrito = async () => {
+  //* API carrito
+  const enviarAlCarritoAPI = async (item) => {
     try {
-      const response = await axios.post(
-        "/agregarAlCarrito",
-        JSON.stringify({
-          userId: userData?._id,
-          total: producto?.price * cantidad,
-          productId: producto._id,
-          quantity: cantidad,
-        }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) {
-        console.log("echo");
+      const respuesta = await axios.post("/carrito", item, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      if (respuesta.status === 201) {
+        return respuesta;
       }
     } catch (error) {
-      console.error("Error checking username:", error); // Set user-friendly error message
+      console.error(error);
     }
   };
 
-  const test = () => {
-    handleAddItem({
-      userId: userData?._id,
-      total: producto?.price * cantidad,
-      productId: producto._id,
-      quantity: cantidad,
+  const enviarAlCarritoMutation = useMutation(enviarAlCarritoAPI, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("carrito");
+      alert("Hecho");
+    },
+  });
+
+  const enviarAlCarrito = () => {
+    enviarAlCarritoMutation.mutate({
+      owner: usuario,
+      productoId: producto?._id,
+      cantidad: cantidad,
+      precio: producto?.precio,
+      subTotal: producto?.precio * cantidad,
     });
-    console.log(cart);
   };
+
   return (
     <>
       <div className="bg-dark-subtle min-vh-100">
         <Navbar></Navbar>
-        <Container>
-          <Row>
-            <Image src={`${imagenURL}${producto?.imagen}`} fluid></Image>
-          </Row>
-          <Row>
-            <h1>{producto?.nombre}</h1>
-            <h2 className="h6">{`Q.${producto?.precio}`}</h2>
-            <p>{producto?.descripcion}</p>
-          </Row>
-          <Row>
-            <Col md={5} xxl={4} xs={12} sm={5} className="mb-3">
-              <Row>
-                <div className="d-flex justify-content-center">
-                  <div style={{ width: "100%" }}>
-                    <Button
-                      style={{ width: "100%" }}
-                      onClick={agregarAlCarrito}
-                    >
-                      +
-                    </Button>
+        {isLoading ? (
+          <div className="bg-dark-subtle min-vh-100 d-flex justify-content-center align-items-center">
+            <div
+              className="spinner-grow"
+              style={{ width: "4rem", height: "4rem" }}
+              role="status"
+            ></div>
+          </div>
+        ) : (
+          <Container>
+            <Row>
+              <Image src={`${imagenURL}${producto?.imagen}`} fluid></Image>
+            </Row>
+            <Row>
+              <h1>{producto?.nombre}</h1>
+              <h2 className="h6">{`Q.${producto?.precio}`}</h2>
+              <p>{producto?.descripcion}</p>
+            </Row>
+            <Row>
+              <Col md={5} xxl={4} xs={12} sm={5} className="mb-3">
+                <Row>
+                  <div className="d-flex justify-content-center">
+                    <div style={{ width: "100%" }}>
+                      <Button
+                        style={{ width: "100%" }}
+                        onClick={restarCantidad}
+                      >
+                        -
+                      </Button>
+                    </div>
+                    <div style={{ width: "100%" }}>
+                      <h2 className="mx-auto text-center">{cantidad}</h2>
+                    </div>
+                    <div style={{ width: "100%" }} onClick={agregarCantidad}>
+                      <Button style={{ width: "100%" }}>+</Button>
+                    </div>
                   </div>
-                  <div style={{ width: "100%" }}>
-                    <h2 className="mx-auto text-center">{cantidad}</h2>
-                  </div>
-                  <div style={{ width: "100%" }} onClick={restarCantidad}>
-                    <Button style={{ width: "100%" }}>-</Button>
-                  </div>
-                </div>
-              </Row>
-            </Col>
-            <Col>
-              <Button style={{ width: "100%" }} onClick={test}>
-                Agregar al carrito
-              </Button>
-            </Col>
-          </Row>
-        </Container>
+                </Row>
+              </Col>
+              <Col>
+                <Button style={{ width: "100%" }} onClick={enviarAlCarrito}>
+                  Agregar al carrito
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+        )}
       </div>
       <PiePagina></PiePagina>
     </>
