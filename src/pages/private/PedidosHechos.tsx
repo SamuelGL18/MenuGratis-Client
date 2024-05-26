@@ -47,6 +47,7 @@ const PedidosHechos = () => {
                   <>
                     <Card.Text>{producto?.nombre}</Card.Text>
                     <Card.Text className="blockquote">{`Subtotal: Q.${producto?.subTotal}`}</Card.Text>
+                    <Card.Text className="blockquote">{`De la tienda: ${producto?.owner}`}</Card.Text>
                   </>
                 ))}
                 <Button variant="primary">Marcar como entregado</Button>

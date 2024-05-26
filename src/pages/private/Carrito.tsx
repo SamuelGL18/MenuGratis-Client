@@ -1,4 +1,4 @@
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Container } from "react-bootstrap";
 import Navbar from "../../components/Navbar";
 import PiePagina from "./PiePagina";
 import { useQuery, useQueryClient, useMutation } from "react-query";
@@ -57,7 +57,7 @@ const Carrito = () => {
             ></div>
           </div>
         ) : (
-          carrito?.map((pedidoItem) => (
+          carrito?.productos?.map((pedidoItem) => (
             <Card className="text-center mt-4 mb-2">
               <Card.Header>{pedidoItem?.producto?.nombre}</Card.Header>
               <Card.Img
@@ -71,7 +71,7 @@ const Carrito = () => {
               ></Card.Img>
               <Card.Body>
                 <Card.Title>{`Cantidad: ${pedidoItem?.cantidad} Precio: Q.${pedidoItem?.producto?.precio}`}</Card.Title>
-                <Card.Text>{pedidoItem?.producto?.descripcion}</Card.Text>
+                <Card.Text>{pedidoItem?.descripcion}</Card.Text>
                 {/* <Button variant="primary"></Button> */}
                 <Card.Text className="display-6">{`Subtotal: ${pedidoItem?.subTotal}`}</Card.Text>
               </Card.Body>
@@ -79,6 +79,9 @@ const Carrito = () => {
             </Card>
           ))
         )}
+        <Container>
+          <h3>{`Total de la compra: Q.${carrito?.total}`}</h3>
+        </Container>
         {isError && <h1>No se ha encontrado nada</h1>}
         <div className="bg-dark-subtle d-flex justify-content-center align-items-center">
           <Button onClick={enviarPedidos}>Enviar Pedidos</Button>

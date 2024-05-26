@@ -19,11 +19,7 @@ const CasillaAgregar = () => {
           whileHover="hover"
         >
           <Button variant="transparent" onClick={handleMostrarAgregar}>
-            <Image
-              src="../../public/add.png"
-              fluid
-              style={{ maxHeight: "3em" }}
-            />
+            <Image src="/add.png" fluid style={{ maxHeight: "3em" }} />
           </Button>
         </motion.div>
       </div>

@@ -36,9 +36,6 @@ const ControllersProvider = ({ children }) => {
   };
 
   const cambiarCategoria = (nuevaCategoria) => {
-    console.log(`${nuevaCategoria}
-    
-    `);
     setCategoria(nuevaCategoria);
   };
 

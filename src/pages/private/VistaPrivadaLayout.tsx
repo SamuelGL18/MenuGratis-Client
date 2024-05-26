@@ -4,9 +4,10 @@ import CategoriasNavbar from "./CategoriasNavbar";
 import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { ControladoresContexto } from "./Contexto";
+import { Container } from "react-bootstrap";
 
 const VistaPrivadaLayout = () => {
-  const { isLoading } = useContext(ControladoresContexto);
+  const { isLoading, datosUsuario } = useContext(ControladoresContexto);
   return (
     <>
       <div className="bg-dark-subtle min-vh-100">
@@ -23,6 +24,9 @@ const VistaPrivadaLayout = () => {
         ) : (
           <>
             <CategoriasNavbar></CategoriasNavbar>
+            <Container>
+              <h3 className="mb-3">{`Usuario: ${datosUsuario?.nombreUsuario}`}</h3>
+            </Container>
             <Outlet />
           </>
         )}
