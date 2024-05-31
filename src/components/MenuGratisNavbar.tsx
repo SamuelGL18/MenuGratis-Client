@@ -1,7 +1,7 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { useQuery } from "react-query";
 import axios from "../api/axios";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const MenuGratisNavbar = () => {
   //* Informacion del usuario
@@ -52,8 +52,18 @@ const MenuGratisNavbar = () => {
                 <>
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                      <NavLink to={"/login"}>Iniciar Sesion</NavLink>
-                      <NavLink to={"/registro"}>Registrarse</NavLink>
+                      <NavLink
+                        to={"/login"}
+                        className={"nav-link p-text-style"}
+                      >
+                        Iniciar Sesion
+                      </NavLink>
+                      <NavLink
+                        to={"/registro"}
+                        className={"nav-link p-text-style"}
+                      >
+                        Registrarse
+                      </NavLink>
                     </Nav>
                   </Navbar.Collapse>
                 </>
