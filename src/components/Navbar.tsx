@@ -23,10 +23,8 @@ const Navbar = () => {
   };
 
   //* Utilidades
-  const { isLoading, data: datosUsuario } = useQuery(
-    "datosUsuario",
-    getDatosUsuario
-  );
+
+  const { data: datosUsuario } = useQuery("datosUsuario", getDatosUsuario);
 
   const getTienda = async () => {
     try {
