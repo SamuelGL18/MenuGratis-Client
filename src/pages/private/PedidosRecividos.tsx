@@ -49,6 +49,7 @@ const PedidosRecividos = () => {
                 {pedido?.itemsPedido?.map((producto) => (
                   <>
                     <Card.Text>{producto?.nombre}</Card.Text>
+                    <Card.Text className="blockquote">{`Cantidad pedida: ${producto?.cantidad}`}</Card.Text>
                     <Card.Text className="blockquote">{`Subtotal: Q.${producto?.subTotal}`}</Card.Text>
                   </>
                 ))}

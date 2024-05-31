@@ -8,7 +8,7 @@ const Cards = () => {
     ControladoresContexto
   );
 
-  const imagenURL = "http://localhost:3500/uploads/";
+  const imagenURL = "https://menugratis-server.onrender.com/uploads/";
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, scale: 1 },

@@ -6,7 +6,7 @@ import axios from "../../api/axios";
 import NavbarPrivado from "./NavbarPrivado";
 const Carrito = () => {
   const queryClient = useQueryClient();
-  const imagenURL = "http://localhost:3500/uploads/";
+  const imagenURL = "https://menugratis-server.onrender.com/uploads/";
 
   //* Obteniendo el contendio del carrito
   const getCarrito = async () => {

@@ -2,7 +2,7 @@ import { Button, Image } from "react-bootstrap";
 import { NavLink, useParams } from "react-router-dom";
 const PiePagina = () => {
   const { id } = useParams();
-  const url = `http://localhost:3500/ver/${id}`;
+  const url = `https://samuelgarcia.lol/ver/${id}`;
   const handleClick = () => {
     navigator.clipboard
       .writeText(url)

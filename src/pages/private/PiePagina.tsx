@@ -5,7 +5,7 @@ import { ControladoresContexto } from "./Contexto";
 
 const PiePagina = () => {
   const { datosUsuario } = useContext(ControladoresContexto);
-  const url = `http://localhost:5173/ver/${datosUsuario?.nombreUsuario}`;
+  const url = `https://samuelgarcia.lol/ver/${datosUsuario?.nombreUsuario}`;
   const obtenerLink = () => {
     navigator.clipboard
       .writeText(url)

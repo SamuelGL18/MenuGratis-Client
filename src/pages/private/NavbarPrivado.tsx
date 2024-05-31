@@ -1,11 +1,12 @@
 import { Navbar as NavBar, Nav, Image, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 const NavbarPrivado = () => {
   //* Informacion del usuario
   //* Haciendo fetch
+  const queryClient = useQueryClient();
   const getDatosUsuario = async () => {
     try {
       const respuesta = await axios.get("/usuario", {
@@ -46,6 +47,7 @@ const NavbarPrivado = () => {
       withCredentials: true,
     });
     irA("/");
+    queryClient.invalidateQueries(["datosUsuario"]);
   };
 
   const verPedidosHechos = () => {

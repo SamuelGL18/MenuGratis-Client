@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from "react-query";
 const Producto = () => {
   const queryClient = useQueryClient();
   const { usuario, idproducto } = useParams();
-  const imagenURL = "http://localhost:3500/uploads/";
+  const imagenURL = "https://menugratis-server.onrender.com/uploads/";
   const [cantidad, setCantidad] = useState(1);
 
   //* Fetch el producto

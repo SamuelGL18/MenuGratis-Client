@@ -28,10 +28,14 @@ const Login = () => {
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
+          validateStatus: () => true,
         }
       );
       if (respuesta.status === 200) {
         irA(`/perfil`);
+      }
+      if (respuesta.status === 401) {
+        alert("Usuario o contraseña incorrecta");
       }
     } catch (error) {
       console.error("Ha ocurrido un error:", error);
