@@ -1,10 +1,9 @@
 import { Navbar as NavBar, Nav, Image, Button } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "../api/axios";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 import { useQuery } from "react-query";
 
-const Navbar = () => {
-  const { usuario } = useParams();
+const NavbarPrivado = () => {
   //* Informacion del usuario
   //* Haciendo fetch
   const getDatosUsuario = async () => {
@@ -28,20 +27,6 @@ const Navbar = () => {
     getDatosUsuario
   );
 
-  const getTienda = async () => {
-    try {
-      const respuesta = await axios.get(`/tienda/${usuario}`, {
-        headers: { "Content-Type": "application/json" },
-      });
-      if (respuesta.data) {
-        return respuesta.data;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const { data: datosOwner } = useQuery("datosOwner", getTienda);
-
   const irA = useNavigate();
   const verCarrito = () => {
     if (!datosUsuario?.nombreUsuario) {
@@ -51,7 +36,6 @@ const Navbar = () => {
     }
   };
 
-  //* Utilidades
   const regresar = () => {
     irA("/");
   };
@@ -73,7 +57,7 @@ const Navbar = () => {
   };
 
   const menuPrincipal = () => {
-    irA(`/ver/${datosOwner?.nombreUsuario}`);
+    irA("/perfil");
   };
 
   const verPedidosRecividos = () => {
@@ -131,4 +115,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarPrivado;

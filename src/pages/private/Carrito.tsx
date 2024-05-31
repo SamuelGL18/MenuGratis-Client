@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import PiePagina from "./PiePagina";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import axios from "../../api/axios";
+import NavbarPrivado from "./NavbarPrivado";
 const Carrito = () => {
   const queryClient = useQueryClient();
   const imagenURL = "http://localhost:3500/uploads/";
@@ -47,7 +48,7 @@ const Carrito = () => {
   return (
     <>
       <div className="bg-dark-subtle min-vh-100 mb-2">
-        <Navbar></Navbar>
+        <NavbarPrivado></NavbarPrivado>
         {isLoading ? (
           <div className="bg-dark-subtle min-vh-100 d-flex justify-content-center align-items-center">
             <div

@@ -22,6 +22,7 @@ const Producto = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
+
       if (respuesta.data) {
         return respuesta.data;
       }
@@ -51,9 +52,14 @@ const Producto = () => {
       const respuesta = await axios.post("/carrito", item, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
+        validateStatus: () => true,
       });
       if (respuesta.status === 201) {
+        alert("Hecho");
         return respuesta;
+      }
+      if (respuesta.status === 401) {
+        alert("Debes iniciar secion");
       }
     } catch (error) {
       console.error(error);
@@ -63,7 +69,6 @@ const Producto = () => {
   const enviarAlCarritoMutation = useMutation(enviarAlCarritoAPI, {
     onSuccess: () => {
       queryClient.invalidateQueries("carrito");
-      alert("Hecho");
     },
   });
 

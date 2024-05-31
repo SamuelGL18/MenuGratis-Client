@@ -1,10 +1,10 @@
-import Navbar from "../../components/Navbar";
 import PiePagina from "./PiePagina";
 import CategoriasNavbar from "./CategoriasNavbar";
 import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { ControladoresContexto } from "./Contexto";
 import { Container } from "react-bootstrap";
+import Navbar from "../../components/Navbar";
 
 const VistaPrivadaLayout = () => {
   const { isLoading, datosUsuario } = useContext(ControladoresContexto);

@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import PiePagina from "../public/PiePagina";
 import { useQuery, useQueryClient } from "react-query";
 import axios from "../../api/axios";
+import NavbarPrivado from "./NavbarPrivado";
 
 const PedidosHechos = () => {
   // const queryClient = useQueryClient();
@@ -29,7 +30,7 @@ const PedidosHechos = () => {
   return (
     <>
       <div className="bg-dark-subtle min-vh-100 mb-2">
-        <Navbar></Navbar>
+        <NavbarPrivado></NavbarPrivado>
         {isLoading ? (
           <div className="bg-dark-subtle min-vh-100 d-flex justify-content-center align-items-center">
             <div
