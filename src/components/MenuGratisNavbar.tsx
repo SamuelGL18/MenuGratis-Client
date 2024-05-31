@@ -1,7 +1,7 @@
-import { Navbar, Container, Nav, NavLink } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 import { useQuery } from "react-query";
 import axios from "../api/axios";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const MenuGratisNavbar = () => {
   //* Informacion del usuario
@@ -43,17 +43,17 @@ const MenuGratisNavbar = () => {
               {datosUsuario?.nombreUsuario ? (
                 <>
                   <Nav className="ms-auto">
-                    <Link to={`/perfil`} className="nav-link p-text-style">
+                    <NavLink to={`/perfil`} className="nav-link p-text-style">
                       Ver Perfil
-                    </Link>
+                    </NavLink>
                   </Nav>
                 </>
               ) : (
                 <>
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                      <NavLink href="/login">Iniciar Sesion</NavLink>
-                      <NavLink href="/registro">Registrarse</NavLink>
+                      <NavLink to={"/login"}>Iniciar Sesion</NavLink>
+                      <NavLink to={"/registro"}>Registrarse</NavLink>
                     </Nav>
                   </Navbar.Collapse>
                 </>
