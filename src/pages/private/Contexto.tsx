@@ -13,7 +13,9 @@ const ControllersProvider = ({ children }) => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      return respuesta.data;
+      if (respuesta.data) {
+        return respuesta.data;
+      }
     } catch (error) {
       console.error(
         "Hubo un error al tratar de obtener la informacion del usuario:",
