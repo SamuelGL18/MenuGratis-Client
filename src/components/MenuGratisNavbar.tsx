@@ -26,6 +26,7 @@ const MenuGratisNavbar = () => {
     "datosUsuario",
     getDatosUsuario
   );
+
   return (
     <>
       <Navbar expand="lg" className="shadow-sm mb-3">
@@ -51,8 +52,8 @@ const MenuGratisNavbar = () => {
                 <>
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                      <NavLink href="login">Iniciar Sesion</NavLink>
-                      <NavLink href="registro">Registrarse</NavLink>
+                      <NavLink href="/login">Iniciar Sesion</NavLink>
+                      <NavLink href="/registro">Registrarse</NavLink>
                     </Nav>
                   </Navbar.Collapse>
                 </>
