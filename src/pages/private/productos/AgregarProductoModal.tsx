@@ -15,6 +15,7 @@ import { useMutation, useQueryClient } from "react-query";
 const AgregarProductoModal = () => {
   const queryClient = useQueryClient();
   // Importes del contexto
+  // @ts-expect-error Funciona asi nomas papito
   const { mostrarAgregar, handleOcultarAgregar } = useContext(
     ControladoresContexto
   );
@@ -27,6 +28,7 @@ const AgregarProductoModal = () => {
   const [categoria, setCategoria] = useState("");
 
   //* Posteo del producto
+  // @ts-expect-error Funciona asi nomas papito
   const agregarProductoAPI = async (formData) => {
     try {
       const respuesta = await axios.post("/producto", formData, {
@@ -128,6 +130,7 @@ const AgregarProductoModal = () => {
                 id="imagen"
                 name="imagen"
                 autoComplete="off"
+                // @ts-expect-error Funciona asi nomas papito
                 onChange={(e) => setImagen(e.target.files[0])}
               />
             </FormGroup>

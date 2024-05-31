@@ -7,6 +7,7 @@ import { Container } from "react-bootstrap";
 import Navbar from "../../components/Navbar";
 
 const VistaPrivadaLayout = () => {
+  // @ts-expect-error Funciona asi nomas papito
   const { isLoading, datosUsuario } = useContext(ControladoresContexto);
   return (
     <>

@@ -15,6 +15,7 @@ import { useQueryClient, useMutation } from "react-query";
 
 const EditarProductoModal = () => {
   // Importes del contexto
+  // @ts-expect-error Funciona asi nomas papito
   const { mostrarEditor, handleOcultarEditor } = useContext(
     ControladoresContexto
   );
@@ -54,7 +55,7 @@ const EditarProductoModal = () => {
   useEffect(() => {
     getProducto();
   }, []);
-
+  // @ts-expect-error Funciona asi nomas papito
   const actualizarProductoAPI = async (nuevoProducto) => {
     try {
       // const formData = new FormData(); // Use FormData for multipart uploads

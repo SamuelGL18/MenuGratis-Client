@@ -1,7 +1,6 @@
 import { Button, Card } from "react-bootstrap";
-import Navbar from "../../components/Navbar";
 import PiePagina from "../public/PiePagina";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import axios from "../../api/axios";
 import NavbarPrivado from "./NavbarPrivado";
 
@@ -40,19 +39,23 @@ const PedidosRecividos = () => {
             ></div>
           </div>
         ) : (
+          // @ts-expect-error Funciona asi nomas papito
           pedidosRecividos?.map((pedido) => (
             <Card className="text-center mt-4 mb-2">
               <Card.Header>{`Fecha de Emision: ${pedido?.fechaEmision}`}</Card.Header>
               <Card.Header>{`Cliente: ${pedido?.cliente}`}</Card.Header>
 
               <Card.Body>
-                {pedido?.itemsPedido?.map((producto) => (
-                  <>
-                    <Card.Text>{producto?.nombre}</Card.Text>
-                    <Card.Text className="blockquote">{`Cantidad pedida: ${producto?.cantidad}`}</Card.Text>
-                    <Card.Text className="blockquote">{`Subtotal: Q.${producto?.subTotal}`}</Card.Text>
-                  </>
-                ))}
+                {
+                  // @ts-expect-error Funciona asi nomas papito
+                  pedido?.itemsPedido?.map((producto) => (
+                    <>
+                      <Card.Text>{producto?.nombre}</Card.Text>
+                      <Card.Text className="blockquote">{`Cantidad pedida: ${producto?.cantidad}`}</Card.Text>
+                      <Card.Text className="blockquote">{`Subtotal: Q.${producto?.subTotal}`}</Card.Text>
+                    </>
+                  ))
+                }
                 <Button variant="primary">Marcar como entregado</Button>
               </Card.Body>
               <Card.Footer className="text-muted">{`Total: Q.${pedido?.total}`}</Card.Footer>

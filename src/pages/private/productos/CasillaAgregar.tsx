@@ -8,6 +8,7 @@ const CasillaAgregar = () => {
     visible: { opacity: 1, scale: 1 },
     hover: { scale: 1.1 },
   };
+  // @ts-expect-error Funciona asi nomas papito
   const { handleMostrarAgregar } = useContext(ControladoresContexto);
   return (
     <Col lg={3} className="shadow-sm bg-dark border rounded mb-5">

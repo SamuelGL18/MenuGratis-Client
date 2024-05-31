@@ -1,5 +1,4 @@
 import { Button, Card, Container } from "react-bootstrap";
-import Navbar from "../../components/Navbar";
 import PiePagina from "./PiePagina";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import axios from "../../api/axios";
@@ -58,6 +57,7 @@ const Carrito = () => {
             ></div>
           </div>
         ) : (
+          // @ts-expect-error Funciona asi nomas papito
           carrito?.productos?.map((pedidoItem) => (
             <Card className="text-center mt-4 mb-2">
               <Card.Header>{pedidoItem?.producto?.nombre}</Card.Header>

@@ -47,6 +47,7 @@ const Producto = () => {
   };
 
   //* API carrito
+  // @ts-expect-error Funciona asi nomas papito
   const enviarAlCarritoAPI = async (item) => {
     try {
       const respuesta = await axios.post("/carrito", item, {

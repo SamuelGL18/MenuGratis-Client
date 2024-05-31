@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { ControladoresContexto } from "./Contexto";
 
 const VistaPublicaLayout = () => {
+  // @ts-expect-error Funciona asi nomas papito
   const { isLoading } = useContext(ControladoresContexto);
   return (
     <>

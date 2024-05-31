@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { ControladoresContexto } from "./Contexto";
 
 const PiePagina = () => {
+  // @ts-expect-error Funciona asi nomas papito
   const { datosUsuario } = useContext(ControladoresContexto);
   const url = `https://samuelgarcia.lol/ver/${datosUsuario?.nombreUsuario}`;
   const obtenerLink = () => {

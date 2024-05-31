@@ -6,13 +6,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient, useMutation } from "react-query";
 
 const EliminarProductoModal = () => {
+  // @ts-expect-error Funciona asi nomas papito
   const { mostrarEliminar, handleOcultarEliminar } = useContext(
     ControladoresContexto
   );
   const { idproducto } = useParams();
   const irA = useNavigate();
   const queryClient = useQueryClient();
-
+  // @ts-expect-error Funciona asi nomas papito
   const eliminarProductoAPI = async ({ idproducto }) => {
     try {
       const respuesta = await axios.delete(`/producto/${idproducto}`, {

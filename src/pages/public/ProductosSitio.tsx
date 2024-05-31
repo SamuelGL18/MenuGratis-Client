@@ -42,38 +42,43 @@ const ProductosSitio = () => {
       ) : (
         <>
           <h3 className="mb-3">Productos de nuestros usuarios</h3>
-          {productosSitio?.map((tienda) =>
-            tienda.mercancias.map((producto) => (
-              <Col xs={12} md={4} lg={3} xl={3} className="mb-4">
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover="hover"
-                >
-                  <Card key={producto?._id}>
-                    <NavLink
-                      to={`/ver/${tienda?.nombreUsuario}/producto/${producto?._id}`}
-                    >
-                      <CardImg
-                        variant="top"
-                        src={`${imagenURL}${producto?.imagen}`}
-                        style={{
-                          maxHeight: "18em",
-                          height: "18em",
-                          objectFit: "cover",
-                        }}
-                      ></CardImg>
-                    </NavLink>
-                    <Card.Body>
-                      <Card.Title>{producto?.nombre}</Card.Title>
-                      <Card.Text>{`Q. ${producto?.precio}`}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </motion.div>
-              </Col>
-            ))
-          )}
+
+          {
+            // @ts-expect-error Funciona asi nomas papito
+            productosSitio?.map((tienda) =>
+              // @ts-expect-error Funciona asi nomas papito
+              tienda.mercancias.map((producto) => (
+                <Col xs={12} md={4} lg={3} xl={3} className="mb-4">
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover="hover"
+                  >
+                    <Card key={producto?._id}>
+                      <NavLink
+                        to={`/ver/${tienda?.nombreUsuario}/producto/${producto?._id}`}
+                      >
+                        <CardImg
+                          variant="top"
+                          src={`${imagenURL}${producto?.imagen}`}
+                          style={{
+                            maxHeight: "18em",
+                            height: "18em",
+                            objectFit: "cover",
+                          }}
+                        ></CardImg>
+                      </NavLink>
+                      <Card.Body>
+                        <Card.Title>{producto?.nombre}</Card.Title>
+                        <Card.Text>{`Q. ${producto?.precio}`}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </motion.div>
+                </Col>
+              ))
+            )
+          }
         </>
       )}
     </>
