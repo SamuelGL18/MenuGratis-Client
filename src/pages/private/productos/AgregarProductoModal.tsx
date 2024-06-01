@@ -16,7 +16,7 @@ const AgregarProductoModal = () => {
   const queryClient = useQueryClient();
   // Importes del contexto
   // @ts-expect-error Funciona asi nomas papito
-  const { mostrarAgregar, handleOcultarAgregar } = useContext(
+  const { mostrarAgregar, handleOcultarAgregar, refetch } = useContext(
     ControladoresContexto
   );
 
@@ -49,6 +49,7 @@ const AgregarProductoModal = () => {
       setPrecio("");
       setImagen(null);
       handleOcultarAgregar();
+      refetch();
     },
   });
 

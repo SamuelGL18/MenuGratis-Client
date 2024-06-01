@@ -24,7 +24,10 @@ const Navbar = () => {
 
   //* Utilidades
 
-  const { data: datosUsuario } = useQuery("datosUsuario", getDatosUsuario);
+  const { data: datosUsuario, refetch } = useQuery(
+    "datosUsuario",
+    getDatosUsuario
+  );
 
   const getTienda = async () => {
     try {
@@ -60,6 +63,7 @@ const Navbar = () => {
       withCredentials: true,
     });
     irA("/");
+    refetch();
   };
 
   const verPedidosHechos = () => {

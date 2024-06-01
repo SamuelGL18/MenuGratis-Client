@@ -25,10 +25,11 @@ const ControllersProvider = ({ children }) => {
   };
 
   //* Utilidades
-  const { isLoading, data: datosUsuario } = useQuery(
-    "datosUsuario",
-    getDatosUsuario
-  );
+  const {
+    isLoading,
+    data: datosUsuario,
+    refetch,
+  } = useQuery("datosUsuario", getDatosUsuario);
 
   //* Establecer que productos se van a mostrar
   const [productos, setProductos] = useState([]);
@@ -86,6 +87,7 @@ const ControllersProvider = ({ children }) => {
     cambiarCategoria,
     seleccionarProductos,
     categoria,
+    refetch,
   };
 
   return (
