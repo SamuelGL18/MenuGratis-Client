@@ -32,7 +32,7 @@ const Login = () => {
         }
       );
       if (respuesta.status === 200) {
-        irA(`/perfil`);
+        irA(`/`);
       }
       if (respuesta.status === 401) {
         alert("Usuario o contraseña incorrecta");

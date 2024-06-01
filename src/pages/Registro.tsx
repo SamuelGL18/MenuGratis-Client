@@ -107,7 +107,7 @@ const Registro = () => {
             }
           );
           if (respuesta.status == 200) {
-            irA(`/perfil`);
+            irA(`/`);
           }
         } catch (error) {
           console.error("Se produjo un error:", error);
