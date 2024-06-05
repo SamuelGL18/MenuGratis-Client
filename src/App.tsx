@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+// prueba
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import VistaPrivada from "./pages/private/VistaPrivada";
